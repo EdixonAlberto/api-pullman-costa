@@ -1,0 +1,9 @@
+# FOLDERS
+node_modules/
+# .vscode/ Remove this comment to ignore the folder .vscode/
+dist/
+
+# FILES
+.env
+*.log
+Procfile
