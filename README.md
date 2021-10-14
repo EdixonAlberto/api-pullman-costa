@@ -1,18 +1,18 @@
-# Template Node TS
+# API Pullman Costa
 
-[![](https://img.shields.io/badge/author-Edixon_Piña-green?style=for-the-badge)](https://edixonalberto.com)
-
-[![](https://img.shields.io/badge/types-TypeScript-blue?style=for-the-badge)]()
+[![](https://img.shields.io/badge/types-TypeScript-blue?style=for-the-badge)](https://github.com/microsoft/TypeScript)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=for-the-badge)](https://github.com/prettier/prettier)
 
-Basic template to start a project using nodejs with typescript
+Api REST que traduce la api SOAP de Sibus destinada a Pullman Costa Central
 
 ### Comands
 
 ```sh
-yarn install
+npm install # Instalar todas las dependencias
 
-yarn run dev # run app in mode developer
-yarn run build # build app
-yarn start # run app in mode production
+npm run dev # Iniciar api en modo desarrollo
+
+npm run build # Compilar api
+
+npm start # Iniciar api en modo producción
 ```
