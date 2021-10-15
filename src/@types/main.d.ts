@@ -1,5 +1,11 @@
 type TConfig = {
+  baseURL: string
+  credentials: {
+    user: string
+    password: string
+  }
   port: number
+  modeDev: boolean
 }
 
 /************************************ DECLARATIONS **************************************/

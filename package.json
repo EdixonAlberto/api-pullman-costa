@@ -22,20 +22,26 @@
     "start": "npm run build && npm run alias-install && node dist"
   },
   "_moduleAliases": {
-    "~UTILS": "dist/utils"
+    "~UTILS": "dist/utils",
+    "~ENTITY": "dist/entities",
+    "~SERVICES": "dist/services"
   },
   "dependencies": {
-    "@types/express": "^4.17.13",
+    "axios": "^0.23.0",
     "express": "^4.17.1",
-    "link-module-alias": "^1.2.0"
+    "http-status-codes": "^2.1.4",
+    "link-module-alias": "^1.2.0",
+    "xml2js": "^0.4.23"
   },
   "devDependencies": {
+    "@types/express": "^4.17.13",
     "@types/node": "^13.7.4",
+    "@types/xml2js": "^0.4.9",
     "dotenv": "^8.2.0",
     "husky": "^7.0.2",
     "nodemon": "2.0.7",
     "prettier": "^1.19.1",
-    "typescript": "^4.4.3"
+    "typescript": "^4.4.4"
   },
   "engines": {
     "node": "^14.16.1",

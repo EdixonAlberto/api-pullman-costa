@@ -1,4 +1,5 @@
 import express from 'express'
+import { router } from './routes'
 
 class Server {
   readonly PORT: number = global.config.port
@@ -10,11 +11,7 @@ class Server {
   }
 
   private routes(): void {
-    this.app.use('/api', (req, res) => {
-      res.status(200).json({
-        status: 'OK'
-      })
-    })
+    this.app.use('/api', router)
   }
 
   public start(): void {
