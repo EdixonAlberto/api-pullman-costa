@@ -1,11 +1,11 @@
 type TConfig = {
-  port: number;
-};
+  port: number
+}
 
 /************************************ DECLARATIONS **************************************/
 
 declare namespace NodeJS {
   interface Global {
-    config: TConfig;
+    config: TConfig
   }
 }
