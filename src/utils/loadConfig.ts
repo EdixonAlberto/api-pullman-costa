@@ -10,7 +10,7 @@ export async function loadConfig(): Promise<void> {
   const config: TConfig = {
     baseURL:
       'https://pullman-ws-web-costacentral.azurewebsites.net/ws/ws_pbus/pbus_ws_pcosta',
-    credentials: {
+    credential: {
       user: ENV.USER || '',
       password: ENV.PASSWORD || ''
     },

@@ -1,9 +1,11 @@
+type TCredential = {
+  user: string
+  password: string
+}
+
 type TConfig = {
   baseURL: string
-  credentials: {
-    user: string
-    password: string
-  }
+  credential: TCredential
   port: number
   modeDev: boolean
 }
