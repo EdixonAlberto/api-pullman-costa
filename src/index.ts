@@ -8,7 +8,7 @@ async function main() {
     const server = new Server()
     server.start()
   } catch (error) {
-    console.error('>> ERROR:', (error as Error).message)
+    console.error('!!ERROR:', (error as Error).message)
   }
 }
 

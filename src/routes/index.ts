@@ -3,19 +3,12 @@ import StatusCodes from 'http-status-codes'
 import axios from 'axios'
 import fs from 'fs'
 import { resolve } from 'path'
-import xml2js from 'xml2js'
 
 import { endpoints } from '~ENTITY/enums'
-import { InterceptorAxios } from '~SERVICES/AxiosInterceptor'
-import { XMLStructure } from '~SERVICES/XMLStructure'
+import { InterceptorAxiosService } from '~SERVICES/InterceptorAxios.service'
+import { ParserXMLService } from '~SERVICES/ParserXML.service'
 
 const router = Router()
-
-new InterceptorAxios()
-
-const parser = new xml2js.Parser({
-  trim: true
-})
 
 router.get(endpoints.API, (_, res: Response): void => {
   const pkg = JSON.parse(fs.readFileSync(resolve('package.json'), 'utf8'))
@@ -32,29 +25,33 @@ router.get(endpoints.API, (_, res: Response): void => {
 router.get(
   endpoints.CITIES,
   async (_, res: Response): Promise<void> => {
-    const XML = new XMLStructure(global.config.credential)
-    const xml = XML.create()
+    const parserXMLService = new ParserXMLService(global.config.credential)
+    new InterceptorAxiosService(parserXMLService)
+
+    const xml = parserXMLService.xml()
 
     try {
-      const { data: xmlOut } = await axios.post('/sb_ciudades.php', xml)
+      const { status, data } = <TResponse<TCitySOAP[]>>(
+        await axios.post('/sb_ciudades.php', xml)
+      )
 
-      // descomposicion
-      const js = await parser.parseStringPromise(xmlOut as string)
-      const body = js['SOAP-ENV:Envelope']['SOAP-ENV:Body']
-      const response = body[0]['ns1:ciudadesResponse']
-      const _return = response[0].return
-      const citiesSTR = _return[0]['_']
-      const cities = JSON.parse(citiesSTR) as any[]
+      if (status === StatusCodes.OK) {
+        const cities: TCity[] = data.map((city: TCitySOAP) => ({
+          code: city.codigo.toString(),
+          name: city.nombre
+        }))
 
-      // estructurar respuesta
-      const citiesOverwrite = cities.map((city) => ({
-        code: city.codigo,
-        name: city.nombre
-      }))
-
-      res.status(StatusCodes.OK).json(citiesOverwrite)
+        res.status(StatusCodes.OK).json(cities)
+      } else {
+        res.status(status).json({
+          code: data.codigo,
+          error: data.error
+        })
+      }
     } catch (error) {
-      console.error('ERROR ->', (error as Error).message)
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+        error: (error as Error).message
+      })
     }
   }
 )
