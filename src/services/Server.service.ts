@@ -1,7 +1,7 @@
 import express from 'express'
-import { router } from './routes'
+import { router } from '../routes'
 
-class Server {
+class ServerService {
   readonly PORT: number = global.config.port
   private app: express.Application
 
@@ -20,4 +20,4 @@ class Server {
   }
 }
 
-export { Server }
+export { ServerService }
