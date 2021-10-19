@@ -1,4 +1,4 @@
-import { Router, Response, response } from 'express'
+import { Router, Response } from 'express'
 import { AxiosInstance } from 'axios'
 import StatusCodes from 'http-status-codes'
 import { endpoints } from '~ENTITY/enums'
@@ -15,20 +15,23 @@ class CitiesRoutes {
 
   private routesLoad(): void {
     this.router.get(endpoints.CITIES, async (_, res: Response) => {
-      const xml = this.parser.xml()
+      const endpoint = '/sb_ciudades.php'
+      const xml = this.parser.xml(endpoint)
 
       try {
         const { status, data } = <TResponse<TCitySOAP[]>>(
-          await this.request.post('/sb_ciudades.php', xml)
+          await this.request.post(endpoint, xml)
         )
 
         if (status === StatusCodes.OK) {
-          const cities: TCity[] = data.map((city: TCitySOAP) => ({
-            code: city.codigo.toString(),
-            name: city.nombre
-          }))
+          const cities: TCity[] = data.map((city: TCitySOAP) => {
+            return <TCity>{
+              code: city.codigo.toString(),
+              name: city.nombre
+            }
+          })
 
-          res.status(StatusCodes.OK).json(cities)
+          res.status(status).json(cities)
         } else {
           res.status(status).json({
             code: data.codigo,
@@ -43,17 +46,40 @@ class CitiesRoutes {
     })
 
     this.router.get(endpoints.ROUTES, async (_, res: Response) => {
-      const xml = this.parser.xml()
+      const endpoint = '/sb_tramos.php'
+      const xml = this.parser.xml(endpoint)
 
       try {
-        const { status, data } = <TResponse<object>>(
-          await this.request.post('/sb_tramos.php', xml)
+        const { status, data } = <TResponse<TTramoSOAP[]>>(
+          await this.request.post(endpoint, xml)
         )
 
-        console.log(status, data)
-      } catch (error) {}
+        if (status === StatusCodes.OK) {
+          const routes = data.map((tramo: TTramoSOAP) => {
+            return <TRoute>{
+              origin: {
+                code: tramo.ciudador.toString(),
+                name: tramo.origen
+              },
+              destiny: {
+                code: tramo.ciudaddes.toString(),
+                name: tramo.destino
+              }
+            }
+          })
 
-      res.end()
+          res.status(status).json(routes)
+        } else {
+          res.status(status).json({
+            code: data.codigo,
+            error: data.error
+          })
+        }
+      } catch (error) {
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+          error: (error as Error).message
+        })
+      }
     })
   }
 }

@@ -5,15 +5,27 @@
 
 Api REST que traduce la api SOAP de Sibus destinada a Pullman Costa Central
 
-### Endpoints API SOAP
+### Endpoints: API SOAP (SIBUS)
 
-1. POST: /sb_ciudades.php
-2. POST: /sb_tramos.php
+**URL_BASE:**
+https://pullman-ws-web-costacentral.azurewebsites.net/ws/ws_pbus/pbus_ws_pcosta
 
-### Endpoints API REST
+| Endpoint                      | Metodo | Descripción                                                                              |
+| ----------------------------- | ------ | ---------------------------------------------------------------------------------------- |
+| /sb_ciudades.php?wsdl         | POST   | Obtener la información de los códigos de ciudades y nombres para futuras actualizaciones |
+| /sb_tramos.php?wsdl           | POST   | Obtener la información de los tramos disponibles                                         |
+| /sb_search_schedules.php?wsdl | POST   | Buscar los horarios de la empresa                                                        |
 
-1. GET: /cities
-2. GET: /
+### Endpoints: API REST (WIT)
+
+**URL_BASE:** ??
+
+| Endpoint  | Metodo | Descripción                       |
+| --------- | ------ | --------------------------------- |
+| /api      | GET    | Obtener el estatus de la api rest |
+| /cities   | GET    | dasdsd                            |
+| /routes   | GET    | asdasd                            |
+| /services | POST   | Obtener los servicios disponibles |
 
 ### Commands
 

@@ -14,11 +14,9 @@ class MainRoutes {
       const pkg = JSON.parse(fs.readFileSync(resolve('package.json'), 'utf8'))
 
       res.status(StatusCodes.OK).json({
-        data: {
-          name: 'Api Pullman Costa',
-          version: pkg.version,
-          currentDate: new Date().toISOString()
-        }
+        name: pkg.name,
+        version: pkg.version,
+        currentDate: new Date().toISOString()
       })
     })
   }

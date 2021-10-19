@@ -10,14 +10,19 @@ type TConfig = {
   modeDev: boolean
 }
 
+type TResponse<D> = {
+  status: number
+  data: D & TErrorSOAP
+}
+
 type TCity = {
   code: string
   name: string
 }
 
-type TResponse<D> = {
-  status: number
-  data: D & TErrorSOAP
+type TRoute = {
+  origin: TCity
+  destiny: TCity
 }
 
 /************************************ DECLARATIONS **************************************/

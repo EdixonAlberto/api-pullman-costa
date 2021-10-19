@@ -9,28 +9,26 @@ class ParserXMLService {
     })
   ) {}
 
-  private getAttr(endpoint: string): string {
+  private getResourceName(endpoint: string): string {
     const start: number = endpoint.search(/\_/) + 1
     const end: number = endpoint.search(/\./)
 
-    let attr: string = endpoint.substring(start, end)
-    attr = `${attr}Response`
-
-    return attr
+    return endpoint.substring(start, end)
   }
 
   public async js(xml: string, endpoint: string): Promise<object & TErrorSOAP> {
-    const attr = this.getAttr(endpoint)
+    const resourceName = this.getResourceName(endpoint)
 
     const json = await this.parser.parseStringPromise(xml)
     const body = json['SOAP-ENV:Envelope']['SOAP-ENV:Body']
-    const response = body[`ns1:${attr}`].return
+    const response = body[`ns1:${resourceName}Response`].return
     const js = JSON.parse(response)
 
     return js
   }
 
-  public xml(params?: object): string {
+  public xml(endpoint: string, params?: object): string {
+    const resourceName = this.getResourceName(endpoint)
     const { user, password } = global.config.credential
     let XMLParams = ''
 
@@ -41,15 +39,15 @@ class ParserXMLService {
       }
     } else XMLParams = ''
 
-    const xml = /* XML */ `
+    const xml = `
 <?xml version="1.0" encoding="utf-8"?>
 <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
   <soap:Body>
-    <ciudades>
+    <${resourceName}>
       <user>${user}</user>
       <password>${password}</password>
       ${XMLParams}
-    </ciudades>
+    </${resourceName}>
   </soap:Body>
 </soap:Envelope>`
 
