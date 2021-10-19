@@ -25,7 +25,19 @@ type TRoute = {
   destiny: TCity
 }
 
-/************************************ DECLARATIONS **************************************/
+type TAxios = import('axios').Axios
+
+/* INTERFACES___________________________________________________________________________*/
+
+interface IHttp extends TAxios {
+  post<T = unknown, R = import('axios').AxiosResponse<T & TError>, D = any>(
+    url: string,
+    data?: D,
+    config?: import('axios').AxiosRequestConfig<D>
+  ): Promise<R>
+}
+
+/* DECLARATIONS ________________________________________________________________________*/
 
 declare namespace NodeJS {
   interface Global {

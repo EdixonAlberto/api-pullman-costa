@@ -1,25 +1,16 @@
-import { Router, Response } from 'express'
-import { AxiosInstance } from 'axios'
+import { Response } from 'express'
 import StatusCodes from 'http-status-codes'
 import { endpoints } from '~ENTITY/enums'
-import { ParserXMLService } from '~SERVICES/ParserXML.service'
+import { ResourceRoutes } from '~ENTITY/class'
 
-class CitiesRoutes {
-  constructor(
-    private router: Router,
-    private request: AxiosInstance,
-    private parser: ParserXMLService
-  ) {
-    this.routesLoad()
-  }
-
-  private routesLoad(): void {
+class CitiesRoutes extends ResourceRoutes {
+  routesLoad() {
     this.router.get(endpoints.CITIES, async (_, res: Response) => {
       const endpoint = '/sb_ciudades.php'
       const xml = this.parser.xml(endpoint)
 
       try {
-        const { status, data } = await this.request.post<TCitySOAP[]>(endpoint, xml)
+        const { status, data } = await this.http.post<TCitySOAP[]>(endpoint, xml)
         let cities: TCity[] | null = null
 
         if (status === StatusCodes.OK) {
@@ -44,7 +35,7 @@ class CitiesRoutes {
       const xml = this.parser.xml(endpoint)
 
       try {
-        const { status, data } = await this.request.post<TTramoSOAP[]>(endpoint, xml)
+        const { status, data } = await this.http.post<TTramoSOAP[]>(endpoint, xml)
         let routes: TRoute[] | null = null
 
         if (status === StatusCodes.OK) {
