@@ -2,7 +2,6 @@ import xml2js from 'xml2js'
 
 class ParserXMLService {
   constructor(
-    private credential: TCredential,
     private parser: xml2js.Parser = new xml2js.Parser({
       trim: true, // Trim the whitespace at the beginning and end of text nodes.
       ignoreAttrs: true, // Ignore all XML attributes and only create text nodes.
@@ -32,6 +31,7 @@ class ParserXMLService {
   }
 
   public xml(params?: object): string {
+    const { user, password } = global.config.credential
     let XMLParams = ''
 
     if (params) {
@@ -46,8 +46,8 @@ class ParserXMLService {
 <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
   <soap:Body>
     <ciudades>
-      <user>${this.credential.user}</user>
-      <password>${this.credential.password}</password>
+      <user>${user}</user>
+      <password>${password}</password>
       ${XMLParams}
     </ciudades>
   </soap:Body>

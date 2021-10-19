@@ -5,7 +5,17 @@
 
 Api REST que traduce la api SOAP de Sibus destinada a Pullman Costa Central
 
-### Comands
+### Endpoints API SOAP
+
+1. POST: /sb_ciudades.php
+2. POST: /sb_tramos.php
+
+### Endpoints API REST
+
+1. GET: /cities
+2. GET: /
+
+### Commands
 
 ```sh
 npm install # Instalar todas las dependencias
