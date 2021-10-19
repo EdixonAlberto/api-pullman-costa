@@ -5,7 +5,7 @@ import { resolve } from 'path'
 import { endpoints } from '~ENTITY/enums'
 
 class MainRoutes {
-  constructor(public router: Router) {
+  constructor(private router: Router) {
     this.routesStart()
   }
 

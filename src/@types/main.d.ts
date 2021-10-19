@@ -10,9 +10,9 @@ type TConfig = {
   modeDev: boolean
 }
 
-type TResponse<D> = {
-  status: number
-  data: D & TErrorSOAP
+type TError = {
+  code: string
+  error: string
 }
 
 type TCity = {

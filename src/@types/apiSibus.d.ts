@@ -1,5 +1,5 @@
 type TErrorSOAP = {
-  codigo: string
+  codigo: '01' | '02' | '03'
   error: string
 }
 

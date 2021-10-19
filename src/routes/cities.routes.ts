@@ -6,7 +6,7 @@ import { ParserXMLService } from '~SERVICES/ParserXML.service'
 
 class CitiesRoutes {
   constructor(
-    public router: Router,
+    private router: Router,
     private request: AxiosInstance,
     private parser: ParserXMLService
   ) {
@@ -19,25 +19,19 @@ class CitiesRoutes {
       const xml = this.parser.xml(endpoint)
 
       try {
-        const { status, data } = <TResponse<TCitySOAP[]>>(
-          await this.request.post(endpoint, xml)
-        )
+        const { status, data } = await this.request.post<TCitySOAP[]>(endpoint, xml)
+        let cities: TCity[] | null = null
 
         if (status === StatusCodes.OK) {
-          const cities: TCity[] = data.map((city: TCitySOAP) => {
+          cities = data.map((city: TCitySOAP) => {
             return <TCity>{
               code: city.codigo.toString(),
               name: city.nombre
             }
           })
-
-          res.status(status).json(cities)
-        } else {
-          res.status(status).json({
-            code: data.codigo,
-            error: data.error
-          })
         }
+
+        res.status(status).json(cities || data)
       } catch (error) {
         res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
           error: (error as Error).message
@@ -50,12 +44,11 @@ class CitiesRoutes {
       const xml = this.parser.xml(endpoint)
 
       try {
-        const { status, data } = <TResponse<TTramoSOAP[]>>(
-          await this.request.post(endpoint, xml)
-        )
+        const { status, data } = await this.request.post<TTramoSOAP[]>(endpoint, xml)
+        let routes: TRoute[] | null = null
 
         if (status === StatusCodes.OK) {
-          const routes = data.map((tramo: TTramoSOAP) => {
+          routes = data.map((tramo: TTramoSOAP) => {
             return <TRoute>{
               origin: {
                 code: tramo.ciudador.toString(),
@@ -67,14 +60,9 @@ class CitiesRoutes {
               }
             }
           })
-
-          res.status(status).json(routes)
-        } else {
-          res.status(status).json({
-            code: data.codigo,
-            error: data.error
-          })
         }
+
+        res.status(status).json(routes || data)
       } catch (error) {
         res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
           error: (error as Error).message
