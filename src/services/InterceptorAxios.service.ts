@@ -30,6 +30,10 @@ class InterceptorAxiosService {
           ...config.headers
         }
 
+        if (global.config.modeDev) {
+          console.log('>> ' + config.method?.toUpperCase() + ': ' + config.url)
+        }
+
         return config
       },
       (error: AxiosError) => {

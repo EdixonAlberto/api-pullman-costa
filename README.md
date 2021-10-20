@@ -15,17 +15,17 @@ https://pullman-ws-web-costacentral.azurewebsites.net/ws/ws_pbus/pbus_ws_pcosta
 | /sb_ciudades.php?wsdl         | POST   | Obtener la información de los códigos de ciudades y nombres para futuras actualizaciones |
 | /sb_tramos.php?wsdl           | POST   | Obtener la información de los tramos disponibles                                         |
 | /sb_search_schedules.php?wsdl | POST   | Buscar los horarios de la empresa                                                        |
+| /sb_available_seats.php?wsdl  | POST   | Obtener la disponibilidad de un servicio según un tipo de asiento                        |
 
 ### Endpoints: API REST (WIT)
 
-**URL_BASE:** ??
-
-| Endpoint  | Metodo | Descripción                       |
-| --------- | ------ | --------------------------------- |
-| /api      | GET    | Obtener el estatus de la api rest |
-| /cities   | GET    | dasdsd                            |
-| /routes   | GET    | asdasd                            |
-| /services | POST   | Obtener los servicios disponibles |
+| Endpoint         | Metodo | Descripción                                 |
+| ---------------- | ------ | ------------------------------------------- |
+| /api             | GET    | Obtener el estatus de la api rest           |
+| /cities          | GET    | dasdsd                                      |
+| /routes          | GET    | asdasd                                      |
+| /services        | GET    | Obtener los servicios disponibles           |
+| /seats_available | GET    | Obtener la cantidad de asientos disponibles |
 
 ### Commands
 

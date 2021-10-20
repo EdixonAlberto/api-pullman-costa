@@ -24,7 +24,7 @@ class CitiesRoutes extends ResourceRoutes {
         res.status(status).json(response)
       } catch (error) {
         res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-          error: (error as Error).message
+          ...(error as TError)
         })
       }
     })
@@ -54,7 +54,7 @@ class CitiesRoutes extends ResourceRoutes {
         res.status(status).json(response)
       } catch (error) {
         res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-          error: (error as Error).message
+          ...(error as TError)
         })
       }
     })

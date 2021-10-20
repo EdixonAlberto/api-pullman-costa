@@ -4,7 +4,8 @@ export enum endpoints {
   API = '/',
   CITIES = '/cities',
   ROUTES = '/routes',
-  SERVICES = '/services'
+  SERVICES = '/services',
+  SEATS_AVAILABLE = '/seats_available'
 }
 
 export enum errorsSOAP {

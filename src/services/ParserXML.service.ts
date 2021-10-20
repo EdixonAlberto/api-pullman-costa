@@ -35,21 +35,20 @@ class ParserXMLService {
     if (params) {
       for (const key in params) {
         const value = params[key]
-        XMLParams += `<${key}>${value}</${key}>
-      `
+        XMLParams += `<${key}>${value}</${key}>`
       }
     }
 
     const xml = `
 <?xml version="1.0" encoding="utf-8"?>
 <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
-  <soap:Body>
-    <${resourceName}>
-      <user>${user}</user>
-      <password>${password}</password>
-      ${XMLParams}
-    </${resourceName}>
-  </soap:Body>
+<soap:Body>
+<${resourceName}>
+<user>${user}</user>
+<password>${password}</password>
+${XMLParams}
+</${resourceName}>
+</soap:Body>
 </soap:Envelope>`
 
     return xml.trim()
