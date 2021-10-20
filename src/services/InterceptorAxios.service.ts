@@ -49,8 +49,10 @@ class InterceptorAxiosService {
           response.status = errorsSOAP[responseJS.codigo]
 
           response.data = <TError>{
-            code: responseJS.codigo,
-            error: responseJS.error
+            error: {
+              code: responseJS.codigo,
+              error: responseJS.error
+            }
           }
         } else response.data = responseJS
 

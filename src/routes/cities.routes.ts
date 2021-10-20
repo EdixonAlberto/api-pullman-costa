@@ -11,18 +11,17 @@ class CitiesRoutes extends ResourceRoutes {
 
       try {
         const { status, data } = await this.http.post<TCitySOAP[]>(endpoint, xml)
-        let cities: TCity[] | null = null
 
-        if (status === StatusCodes.OK) {
-          cities = data.map((city: TCitySOAP) => {
+        const response =
+          data.error ||
+          data.map((city: TCitySOAP) => {
             return <TCity>{
               code: city.codigo.toString(),
               name: city.nombre
             }
           })
-        }
 
-        res.status(status).json(cities || data)
+        res.status(status).json(response)
       } catch (error) {
         res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
           error: (error as Error).message
@@ -36,10 +35,10 @@ class CitiesRoutes extends ResourceRoutes {
 
       try {
         const { status, data } = await this.http.post<TTramoSOAP[]>(endpoint, xml)
-        let routes: TRoute[] | null = null
 
-        if (status === StatusCodes.OK) {
-          routes = data.map((tramo: TTramoSOAP) => {
+        const response =
+          data.error ||
+          data.map((tramo: TTramoSOAP) => {
             return <TRoute>{
               origin: {
                 code: tramo.ciudador.toString(),
@@ -51,9 +50,8 @@ class CitiesRoutes extends ResourceRoutes {
               }
             }
           })
-        }
 
-        res.status(status).json(routes || data)
+        res.status(status).json(response)
       } catch (error) {
         res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
           error: (error as Error).message

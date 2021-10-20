@@ -3,7 +3,8 @@ import { StatusCodes } from 'http-status-codes'
 export enum endpoints {
   API = '/',
   CITIES = '/cities',
-  ROUTES = '/routes'
+  ROUTES = '/routes',
+  SERVICES = '/services'
 }
 
 export enum errorsSOAP {

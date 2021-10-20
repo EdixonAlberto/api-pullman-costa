@@ -35,9 +35,10 @@ class ParserXMLService {
     if (params) {
       for (const key in params) {
         const value = params[key]
-        XMLParams += `<${key}>${value}</${key}>`
+        XMLParams += `<${key}>${value}</${key}>
+      `
       }
-    } else XMLParams = ''
+    }
 
     const xml = `
 <?xml version="1.0" encoding="utf-8"?>

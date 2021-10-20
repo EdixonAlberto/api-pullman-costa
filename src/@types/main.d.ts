@@ -11,8 +11,10 @@ type TConfig = {
 }
 
 type TError = {
-  code: string
-  error: string
+  error: {
+    code: TErrorSOAP['codigo']
+    error: string
+  }
 }
 
 type TCity = {
