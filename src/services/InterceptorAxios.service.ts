@@ -4,6 +4,7 @@ import axios, {
   AxiosError,
   AxiosInstance
 } from 'axios'
+import { StatusCodes } from 'http-status-codes'
 import { errorsSOAP } from '~ENTITY/enums'
 import { ParserXMLService } from '~SERVICES/ParserXML.service'
 
@@ -48,12 +49,16 @@ class InterceptorAxiosService {
         const xml = response.data as string
         const responseJS = await this.parserXMLService.js(xml, this.endpoint)
 
-        if (responseJS.codigo === '02') throw new Error(responseJS.error)
-        else if (responseJS.codigo) {
+        if (responseJS.codigo === '02') {
+          throw <TError>{
+            code: responseJS.codigo,
+            error: responseJS.error
+          }
+        } else if (responseJS.codigo) {
           response.status = errorsSOAP[responseJS.codigo]
 
-          response.data = <TError>{
-            error: {
+          response.data = {
+            error: <TError>{
               code: responseJS.codigo,
               error: responseJS.error
             }
@@ -64,7 +69,11 @@ class InterceptorAxiosService {
       },
       (error: AxiosError) => {
         console.error('!! ERROR-RESPONSE-AXIOS:', error.message)
-        throw new Error(error.response?.statusText)
+
+        throw <TError>{
+          code: StatusCodes.INTERNAL_SERVER_ERROR.toString(),
+          error: error.message
+        }
       }
     )
   }

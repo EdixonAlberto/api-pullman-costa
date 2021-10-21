@@ -1,12 +1,10 @@
-import { Request, Response } from 'express'
-import StatusCodes from 'http-status-codes'
 import { endpoints } from '~ENTITY/enums'
 import { ResourceRoutes } from '~ENTITY/class'
 import { getDate } from '~UTILS/time.utils'
 
 class ServicesRoutes extends ResourceRoutes {
   routesLoad() {
-    this.router.get(endpoints.SERVICES, async (req: Request, res: Response) => {
+    this.router.get(endpoints.SERVICES, async (req, res, next) => {
       const endpoint = '/sb_search_schedules.php'
       const query = req.query as TQueryServices
 
@@ -38,9 +36,7 @@ class ServicesRoutes extends ResourceRoutes {
 
         res.status(status).json(response)
       } catch (error) {
-        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-          ...(error as TError)
-        })
+        next(error)
       }
     })
   }

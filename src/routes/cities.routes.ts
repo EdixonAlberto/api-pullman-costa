@@ -1,11 +1,9 @@
-import { Response } from 'express'
-import StatusCodes from 'http-status-codes'
 import { endpoints } from '~ENTITY/enums'
 import { ResourceRoutes } from '~ENTITY/class'
 
 class CitiesRoutes extends ResourceRoutes {
   routesLoad() {
-    this.router.get(endpoints.CITIES, async (_, res: Response) => {
+    this.router.get(endpoints.CITIES, async (_, res, next) => {
       const endpoint = '/sb_ciudades.php'
       const xml = this.parser.xml(endpoint)
 
@@ -23,13 +21,11 @@ class CitiesRoutes extends ResourceRoutes {
 
         res.status(status).json(response)
       } catch (error) {
-        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-          ...(error as TError)
-        })
+        next(error)
       }
     })
 
-    this.router.get(endpoints.ROUTES, async (_, res: Response) => {
+    this.router.get(endpoints.ROUTES, async (_, res, next) => {
       const endpoint = '/sb_tramos.php'
       const xml = this.parser.xml(endpoint)
 
@@ -53,9 +49,7 @@ class CitiesRoutes extends ResourceRoutes {
 
         res.status(status).json(response)
       } catch (error) {
-        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-          ...(error as TError)
-        })
+        next(error)
       }
     })
   }

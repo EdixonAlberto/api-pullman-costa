@@ -16,10 +16,8 @@ type TDateFomats = {
 }
 
 type TError = {
-  error: {
-    code: TErrorSOAP['codigo']
-    error: string
-  }
+  code: TErrorSOAP['codigo']
+  error: string
 }
 
 type TCity = {

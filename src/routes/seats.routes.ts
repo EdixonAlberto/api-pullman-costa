@@ -1,11 +1,9 @@
-import { Request, Response } from 'express'
-import StatusCodes from 'http-status-codes'
 import { endpoints } from '~ENTITY/enums'
 import { ResourceRoutes } from '~ENTITY/class'
 
 class SeatsRoutes extends ResourceRoutes {
   routesLoad() {
-    this.router.get(endpoints.SEATS_AVAILABLE, async (req: Request, res: Response) => {
+    this.router.get(endpoints.SEATS_AVAILABLE, async (req, res, next) => {
       const endpoint = '/sb_available_seats.php'
       const query = req.query as TQuerySeatsAvailable
 
@@ -25,14 +23,9 @@ class SeatsRoutes extends ResourceRoutes {
 
         res.status(status).json(response)
       } catch (error) {
-        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-          ...(error as TError)
-        })
+        next(error)
       }
     })
-
-    // this.router.get(endpoints.SEATS_AVAILABLE, async (req: Request, res: Response) => {
-    // }
   }
 }
 

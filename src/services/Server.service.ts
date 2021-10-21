@@ -1,5 +1,6 @@
 import express from 'express'
 import { router } from '../routes'
+import { errorHandler } from '../middleware'
 
 class ServerService {
   readonly PORT: number = global.config.port
@@ -8,10 +9,15 @@ class ServerService {
   constructor() {
     this.app = express()
     this.routes()
+    this.middlewareOUT()
   }
 
   private routes(): void {
     this.app.use('/api', router)
+  }
+
+  private middlewareOUT(): void {
+    this.app.use(errorHandler)
   }
 
   public start(): void {
