@@ -31,3 +31,16 @@ type TSchedulesSOAP = {
 type TSeatsAvailableSOAP = {
   available_seats: number
 }
+
+type TSeatSOAP = {
+  cell: number //  número de columna de izq a der
+  order: number //  número de fila
+  typeseat: number // tipo de asiento, si es 0, 10 o superior no es un asiento valido, solo sirve para el trabajo de diseño
+  floor: number //  número de piso
+  type: string // tipo de asiento
+  seat: number // número de asiento
+  seat_klass: string // tipo de asiento como texto
+  price: number // precio de este asiento
+  price_tachada: string // precio de este asiento con descuento
+  available: boolean // indica si el asiento está disponible
+}

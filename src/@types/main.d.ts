@@ -20,6 +20,8 @@ type TError = {
   error: string
 }
 
+type TAxios = import('axios').Axios
+
 type TCity = {
   code: string
   name: string
@@ -58,12 +60,28 @@ type TSeatsAvailable = {
   availableSeats: string
 }
 
-type TAxios = import('axios').Axios
+type TSeat = {
+  seat: string
+  state: 'pasillo' | 'libre' | 'ocupado'
+  floor: number
+  type: string
+  price: number
+  priceMoreDiscount: number
+}
+
+type TQueryBusStructure = {
+  serviceID: string
+}
+
+type TBusStructure = {
+  1: Array<TSeat[]>
+  2: Array<TSeat[]>
+}
 
 /* INTERFACES __________________________________________________________________________*/
 
 interface IHttp extends TAxios {
-  post<T = unknown, R = import('axios').AxiosResponse<T & TError>, D = any>(
+  post<T = unknown, R = import('axios').AxiosResponse<T & { error: TError }>, D = any>(
     url: string,
     data?: D,
     config?: import('axios').AxiosRequestConfig<D>

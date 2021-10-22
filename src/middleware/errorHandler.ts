@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express'
 import { StatusCodes } from 'http-status-codes'
 
 const errorHandler = (
-  error: TError | Error,
+  error: TError & Error,
   _: Request,
   res: Response,
   next: NextFunction
@@ -15,9 +15,16 @@ const errorHandler = (
   }
 
   // Error handling personalized
-  res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-    ...error
-  })
+  res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(
+    error.message
+      ? {
+          code: StatusCodes.INTERNAL_SERVER_ERROR,
+          error: error.message
+        }
+      : {
+          ...error
+        }
+  )
 }
 
 export { errorHandler }
