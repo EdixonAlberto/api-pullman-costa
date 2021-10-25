@@ -20,31 +20,38 @@ class BussRoutes extends ResourceRoutes {
         if (data.error) response = data.error
         else {
           const FLOORS: number[] = [1, 2]
-          const COLS: number[] = [4, 3, 2, 1]
 
           // TODO: completar logica para armar la estructura del bus como en pullman
-          FLOORS.forEach((floorNro: number) => {
-            const rows = data.filter((seat: TSeatSOAP) => seat.floor === floorNro)
+          FLOORS.forEach((floor: number) => {
+            const rows = data.filter((seat: TSeatSOAP) => seat.floor === floor)
 
-            rows.forEach((row: TSeatSOAP) => {
-              console.log(row.seat)
-            })
+            let start: boolean = true
+            let order: number = 1
 
-            // <TSeat>{
-            //   seat: seat.seat_klass === 'BLANCO' ? '' : seat.seat,
-            //   state:
-            //     seat.seat_klass === 'BLANCO'
-            //       ? 'pasillo'
-            //       : seat.available
-            //       ? 'libre'
-            //       : 'ocupado',
-            //   floor: seat.floor,
-            //   type: seat.seat_klass,
-            //   price: seat.price,
-            //   priceMoreDiscount: Number.parseInt(seat.price_tachada)
-            // }
+            while (start) {
+              const cols = rows.filter((seat: TSeatSOAP) => seat.order === order)
 
-            // response[floorNro].push()
+              if (cols.length) {
+                const seats = cols.map((seat: TSeatSOAP) => {
+                  return <TSeat>{
+                    seat: seat.seat_klass === 'BLANCO' ? '' : seat.seat.toString(),
+                    state:
+                      seat.seat_klass === 'BLANCO'
+                        ? 'pasillo'
+                        : seat.available
+                        ? 'libre'
+                        : 'ocupado',
+                    floor: seat.floor,
+                    type: seat.seat_klass,
+                    price: seat.price,
+                    priceMoreDiscount: Number.parseInt(seat.price_tachada)
+                  }
+                })
+
+                response[floor].push(seats)
+                order++
+              } else start = false
+            }
           })
         }
 
